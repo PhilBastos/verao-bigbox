@@ -602,7 +602,8 @@ function frameLens(a) {
   uwBase = (PECA ? 0.07 : KV2 ? 0.04 : 0.075) / dolly;
   uwFog.density = underside.material.uniforms.density.value = floor.material.uniforms.density.value = uwBase;   // keep the fish readable
   split.u.lens.value = LENS * TAN_V0 / tanV;           // wider lens → smaller dome, so steep rays on tall screens don't reach the water
-  skyGroup.scale.setScalar(Math.max(1, 800 * Math.tan(Math.atan(tanV) + 0.05) / (SKY_H - 25)));  // sky's top edge never in frame
+  skyGroup.scale.setScalar(Math.max(1, 800 * Math.tan(Math.atan(tanV) + 0.05) / (SKY_H - 25),   // sky's top edge never in frame…
+    (800 * tanV * a + 40) / (SKY_W / 2)));                                                       // …nor its sides on wide screens
 }
 function fit() { frameLens(innerWidth / innerHeight); renderer.setSize(innerWidth, innerHeight); composer.setSize(innerWidth, innerHeight); }
 addEventListener('resize', fit); fit();
