@@ -1,0 +1,45 @@
+/* Tabloide digital (componente): barra de semanas, grade de ofertas, oferta relâmpago.
+   Usado em tabloide.html (tela cheia) e no capítulo do tabloide da landing. Precisa de pecas.css (boia e cores). */
+.tab-barra { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 14px;
+  padding: 14px 16px; background: rgba(11, 74, 95, .78); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 250, 242, .12); }
+.tab-barra button { font: 700 15px/1.1 'Poppins', sans-serif; color: var(--espuma); background: transparent; cursor: pointer;
+  border: 2px solid rgba(255, 250, 242, .4); border-radius: 99px; padding: 9px 18px; }
+.tab-barra button small { display: block; font: 600 13px 'Barlow Condensed', sans-serif; letter-spacing: .04em; opacity: .85; }
+.tab-barra button[aria-pressed=true] { background: var(--coral); border-color: var(--coral); }
+.tab-barra button:focus-visible, .oferta:focus-visible { outline: 3px solid var(--sol); outline-offset: 3px; }
+.grade-t { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 36px 16px 40px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 46px 28px; }
+.oferta { container-type: inline-size; position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px;
+  background: none; border: 0; padding: 12px 8px 8px; color: var(--espuma); font: inherit; font-family: 'Poppins', sans-serif; cursor: pointer; border-radius: 28px; }
+.oferta:hover { background: rgba(255, 250, 242, .05); }
+.oferta .foto { --bd: clamp(96px, 46cqi, 136px); position: relative; height: 200px; width: 100%; display: flex; align-items: center; justify-content: center;
+  margin-bottom: calc(var(--bd) * .45 + 4px); }
+.oferta .foto img { max-width: 72%; max-height: 100%; filter: drop-shadow(0 16px 18px rgba(0, 18, 28, .5)); transition: transform .4s; }
+.oferta:hover .foto img { transform: translateY(-8px) rotate(-2deg); }
+.oferta .nome { font-size: 20px; font-weight: 800; letter-spacing: -.02em; line-height: 1.05; } .oferta .det { font-size: 14px; opacity: .85; }
+.oferta .meu { font: 700 13px 'Barlow Condensed', sans-serif; letter-spacing: .06em; text-transform: uppercase;
+  background: var(--roxo); border-radius: 99px; padding: 3px 12px; margin-top: 6px; }
+.oferta .boia { --d: var(--bd); right: -4px; bottom: calc(var(--bd) * -.45); }   /* no pé da foto: nunca cobre o topo do produto */
+.oferta .boia .rs { font-size: 13px; } .oferta .boia .un { font-size: 12px; } .oferta .boia .de { font-size: 14px; }
+/* oferta relâmpago: a boia vira sol, gira e o preço cai */
+.oferta .raio { display: none; font: 700 14px 'Barlow Condensed', sans-serif; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--roxo); background: var(--sol); border-radius: 99px; padding: 4px 12px; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.oferta[aria-pressed=true] .raio { display: inline-block; }
+.oferta[aria-pressed=true] .boia { background: repeating-conic-gradient(from -22.5deg, var(--sol) 0 45deg, var(--espuma) 0 90deg); }
+.tab-legal { max-width: 900px; margin: 0 auto; padding: 10px 16px 40px; text-align: center; font: 600 16px/1.4 'Barlow Condensed', sans-serif; opacity: .8; }
+@media (max-width: 700px) {
+  .tab-barra { flex-wrap: nowrap; gap: 8px; padding: 10px 12px; } .tab-barra button { font-size: 14px; padding: 7px 12px; }
+  .oferta .meu { font-size: 11px; white-space: nowrap; padding: 3px 9px; }
+  .grade-t { grid-template-columns: 1fr 1fr; gap: 30px 10px; }
+  .oferta .foto { height: 140px; --bd: clamp(84px, 46cqi, 112px); } .oferta .nome { font-size: 16px; }
+  .oferta .boia .rs { font-size: 11px; } .oferta .boia .un { font-size: 10px; } .oferta .boia .de { font-size: 12px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .entra { animation: sobe .7s cubic-bezier(.2, .8, .2, 1.1) both; animation-delay: calc(var(--i) * 55ms); }
+  .sai { animation: afunda .45s ease-in both; animation-delay: calc(var(--i) * 30ms); }
+  .oferta[aria-pressed=true] .boia { animation: gira .7s cubic-bezier(.3, 1.4, .5, 1); }
+}
+@keyframes sobe { from { opacity: 0; translate: 0 90px; scale: .92; } }
+@keyframes afunda { to { opacity: 0; translate: 0 120px; } }
+@keyframes gira { from { rotate: -360deg; scale: .7; } }

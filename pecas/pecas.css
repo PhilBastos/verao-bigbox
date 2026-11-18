@@ -1,0 +1,123 @@
+/* Peças Verão Big Box: story 1080×1920, feed/carrossel 1080×1350, desenhadas em px reais da peça.
+   Assinatura: o preço vem numa boia salva-vidas (coral e branco) que boia na água do KV. */
+:root {
+  --roxo: #4a1466;        /* Big Box, selos e texto sobre a areia */
+  --tinta: #330d4a;       /* texto longo sobre a areia */
+  --coral: #ff4a2b;       /* boia e destaques (vermelho da marca) */
+  --espuma: #fffaf2;      /* branco da boia e texto sobre a água */
+  --fundo: #0a4a60;       /* água funda: sombras e véus */
+  --sol: #ffc23a;         /* preço anterior riscado, aviso de oferta relâmpago */
+}
+.peca { position: relative; overflow: hidden; font-family: 'Poppins', sans-serif; color: var(--tinta);
+  background: var(--bg) center top / 100% auto no-repeat, var(--fundo); isolation: isolate; }
+.peca.story { width: 1080px; height: 1920px; }
+.peca.feed { width: 1080px; height: 1350px; }
+.peca.fundo { background-size: 1296px auto; background-position: center bottom; }   /* fundo do story, só a água (o JS passa a imagem) */
+.peca.fundo::before { content: ''; position: absolute; inset: 0; z-index: -1;   /* mais fundo, mais escuro */
+  background: linear-gradient(180deg, rgba(6, 50, 68, .15), rgba(6, 40, 58, .62)); }
+.peca * { box-sizing: border-box; margin: 0; }
+
+/* ---------- boia de preço ---------- */
+.boia { --d: 300px; position: absolute; width: var(--d); height: var(--d); border-radius: 50%; z-index: 3;
+  background: repeating-conic-gradient(from -22.5deg, var(--coral) 0 45deg, var(--espuma) 0 90deg);
+  box-shadow: 0 calc(var(--d) * .06) calc(var(--d) * .1) rgba(4, 30, 45, .38); }
+.boia::before { content: ''; position: absolute; inset: 0; border-radius: 50%;          /* volume do tubo */
+  background: radial-gradient(circle closest-side, transparent 0 62%, rgba(40, 0, 20, .28) 62.5%, transparent 71%,
+    rgba(255, 255, 255, .42) 80%, transparent 88%, rgba(40, 0, 20, .3) 100%); }
+.boia::after { content: ''; position: absolute; left: 14%; top: 9%; width: 30%; height: 16%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, .85), transparent); transform: rotate(-32deg); }
+.boia .miolo { position: absolute; inset: 19%; border-radius: 50%; background: var(--espuma); z-index: 1;
+  box-shadow: inset 0 calc(var(--d) * .025) calc(var(--d) * .05) rgba(40, 0, 20, .22);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--roxo); line-height: 1; }
+.boia .rs { font-weight: 700; font-size: max(20px, calc(var(--d) * .07)); letter-spacing: .02em; }
+.boia .valor { display: flex; align-items: flex-start; font-weight: 900; letter-spacing: -.04em; }
+.boia .int { font-size: calc(var(--d) * var(--k, .3)); line-height: .9; }
+.boia .dec { font-size: calc(var(--d) * var(--k, .3) * .42); margin-top: .12em; }
+.boia .un { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: max(20px, calc(var(--d) * .062));
+  text-transform: uppercase; letter-spacing: .06em; color: var(--coral); margin-top: .2em; }
+.boia .de { position: absolute; left: 50%; bottom: 100%; transform: translate(-50%, -14%); white-space: nowrap; z-index: 2;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: max(26px, calc(var(--d) * .09)); color: var(--espuma);
+  background: var(--roxo); padding: .12em .55em; border-radius: 99px; }
+.boia .de s { text-decoration-color: var(--sol); text-decoration-thickness: .12em; }
+
+/* ---------- textos ---------- */
+.selo { position: absolute; z-index: 4; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .06em; font-size: 34px; color: var(--espuma); background: var(--roxo); padding: 10px 26px; border-radius: 99px;
+  box-shadow: 0 6px 18px rgba(4, 30, 45, .3); }
+.titulo { position: absolute; z-index: 4; font-weight: 900; letter-spacing: -.03em; line-height: .95; color: var(--espuma);
+  text-shadow: 0 4px 24px rgba(4, 30, 45, .45); }
+.nome { font-weight: 800; letter-spacing: -.02em; line-height: 1.02; }
+.det { font-weight: 500; opacity: .85; }
+.legal { position: absolute; left: 70px; right: 70px; bottom: 44px; z-index: 4; text-align: center;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 25px; line-height: 1.25; color: var(--tinta); }
+.fundo .legal { color: rgba(255, 250, 242, .88); }
+.produto { position: absolute; z-index: 2; filter: drop-shadow(0 18px 22px rgba(4, 40, 58, .35)); }
+.peixe { position: absolute; z-index: 1; filter: drop-shadow(0 14px 18px rgba(4, 40, 58, .3)); }
+
+/* ---------- story: destaque ---------- */
+.destaque .selo { left: 50%; top: 806px; transform: translateX(-50%); }
+.destaque .produto { left: 50%; top: 900px; width: 640px; height: 580px; object-fit: contain; transform: translateX(-50%); }
+.destaque .boia { --d: 360px; left: 670px; top: 1300px; }   /* no pé do produto */
+.destaque .peixe { left: 10px; top: 790px; width: 300px; transform: rotate(-8deg); z-index: 3; }   /* à frente: a cara nunca some atrás do produto */
+.destaque .texto { position: absolute; left: 80px; right: 420px; bottom: 150px; z-index: 4; }   /* nome longo cresce para cima */
+.destaque .nome { font-size: 92px; }
+.destaque .det { font-size: 40px; margin-top: 10px; }
+
+/* abaixo da linha d'água a água escurece com a profundidade: texto branco lê do meio até o pé */
+.funda::before { content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, transparent 0 calc(var(--agua) + 4%), rgba(6, 46, 64, .62) 100%); }
+.story { --agua: 38.5%; } .feed { --agua: 41.5%; }
+.funda .legal { color: rgba(255, 250, 242, .88); }
+
+/* ---------- story: lista ---------- */
+.lista .titulo { left: 70px; top: 790px; font-size: 104px; }
+.lista .itens { position: absolute; left: 50px; right: 50px; top: 1020px; bottom: 150px; z-index: 2;
+  display: flex; flex-direction: column; justify-content: space-between; }
+.item { position: relative; display: grid; grid-template-columns: 380px 1fr; align-items: center; gap: 28px; height: 230px; color: var(--espuma); }
+.item .foto { height: 100%; display: flex; align-items: center; justify-content: center; }
+.item .foto img { max-width: 380px; max-height: 220px; filter: drop-shadow(0 14px 18px rgba(4, 40, 58, .35)); }
+.item .nome { font-size: 52px; text-shadow: 0 3px 16px rgba(4, 30, 45, .5); }
+.item .det { font-size: 30px; margin-top: 6px; }
+.item .boia { --d: 230px; position: absolute; right: 0; top: 50%; margin-top: -115px; }
+.item .texto { padding-right: 240px; }
+.lista .peixe { left: 600px; top: 770px; width: 400px; }
+
+/* ---------- grade (post e carrossel): 1 ou 2 linhas de 2 ---------- */
+.grade .titulo { left: 150px; right: 30px; text-align: center; top: 90px; font-size: 92px; }   /* o peixe nada à esquerda do título */
+.grade .itens { position: absolute; left: 40px; right: 40px; top: 260px; bottom: 150px; z-index: 2;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 44px 30px; }
+.grade .itens.um { top: 400px; bottom: 170px; }
+.grade .itens.um .foto img { max-width: 92%; }
+.grade .cel { position: relative; min-height: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; padding-left: 3%;
+  color: var(--espuma); text-align: left; }
+.grade .cel { --bd: 210px; } .grade .itens:not(.um) .cel { --bd: 186px; }
+.grade .cel .foto { position: relative; flex: 1; min-height: 0; width: 100%; display: flex; align-items: center; justify-content: flex-start;
+  padding-top: 20px; margin-bottom: calc(var(--bd) * .45 + 6px); }
+.grade .cel .foto img { max-width: 64%;   /* produto à esquerda, boia ao lado no pé */ max-height: 100%; filter: drop-shadow(0 14px 18px rgba(0, 20, 30, .45)); }
+.grade .cel .nome { font-size: 42px; text-shadow: 0 3px 14px rgba(4, 30, 45, .45); } .grade .cel .det { font-size: 27px; }
+.grade .cel .boia { --d: var(--bd); right: -6px; bottom: calc(var(--bd) * -.45); }
+.grade .peixe { width: 210px; left: -40px; top: 70px; }
+.dupla .titulo { left: 0; right: 0; top: 600px; font-size: 88px; }
+.dupla .itens, .dupla .itens.um { top: 740px; bottom: 110px; }
+.dupla .cel { --bd: 230px; }
+
+/* ---------- carrossel: capa ---------- */
+.capa .titulo { left: 0; right: 0; text-align: center; top: 650px; font-size: 118px; }
+.capa .arraste { left: 50%; top: 1220px; transform: translateX(-50%); }
+.capa .pa { left: 140px; top: 900px; width: 320px; transform: rotate(-8deg); }
+.capa .pb { right: 140px; top: 915px; width: 290px; transform: rotate(8deg); }
+
+/* ---------- vida: só na página (o PNG sai parado) ---------- */
+.bolha { position: absolute; z-index: 1; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, .9) 0 12%, rgba(255, 255, 255, .15) 30%, rgba(255, 255, 255, .05) 60%, rgba(255, 255, 255, .5) 100%);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .45); }
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.parado) .flutua { animation: flutua 4.8s ease-in-out infinite; animation-delay: var(--atraso, 0s); }
+  html:not(.parado) .boia.flutua { animation-name: boia; }
+  html:not(.parado) .bolha { animation: sobe var(--t, 9s) linear infinite; animation-delay: var(--atraso, 0s); }
+  html:not(.parado) .nada { animation: nada 14s linear infinite; }
+}
+@keyframes flutua { 50% { translate: 0 -14px; rotate: 1.2deg; } }
+@keyframes boia { 0%, 100% { rotate: -4deg; translate: 0 0; } 50% { rotate: 5deg; translate: 0 -16px; } }
+@keyframes sobe { from { translate: 0 0; opacity: 0; } 10% { opacity: 1; } to { translate: 0 -900px; opacity: 0; } }
+@keyframes nada { from { translate: -1500px 0; } to { translate: 700px 0; } }

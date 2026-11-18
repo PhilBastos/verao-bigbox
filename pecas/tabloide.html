@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">   <!-- proposta: só quem tem o link -->
+<title>Tabloide Verão Big Box</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Poppins:wght@500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pecas.css">
+<link rel="stylesheet" href="tabloide.css">
+<style>
+  /* Tabloide em tela cheia: a página desce do KV para o fundo do mar (o componente está em tabloide.js / .css). */
+  :root { --agua: #0b4a5f; --abismo: #062837; }
+  body { margin: 0; font-family: 'Poppins', sans-serif; color: var(--espuma);
+    background: linear-gradient(180deg, var(--agua), var(--abismo) 140vh) var(--abismo); }
+  .topo { position: relative; }
+  .topo img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: center top; }
+  .topo::after { content: ''; position: absolute; inset: 55% 0 0; background: linear-gradient(180deg, transparent, var(--agua)); }
+  .intro { max-width: 760px; margin: 28px auto 0; padding: 0 16px; text-align: center; font-size: 17px; line-height: 1.5; opacity: .9; }
+  main { position: relative; overflow: hidden; }
+  .peixe-t { position: absolute; z-index: 0; width: 210px; opacity: .28; filter: blur(2px); pointer-events: none; }   /* longe, ao fundo */
+  @media (max-width: 700px) { .topo img { aspect-ratio: 1 / .82; content: url(assets/peca-story-fundo.webp); } }
+  @media (prefers-reduced-motion: no-preference) {
+    .peixe-t { animation: atravessa var(--t) linear infinite; animation-delay: var(--atraso); }
+    .peixe-t.volta { animation-direction: reverse; }
+  }
+  @keyframes atravessa { from { translate: -320px 0; } to { translate: calc(100vw + 320px) 0; } }
+</style>
+</head>
+<body>
+<header class="topo"><img src="assets/kv-submerso-1080.jpg" alt="Verão Big Box: os dois peixes mascotes de óculos escuros nadando sob o título"></header>
+<nav class="tab-barra" aria-label="Semana das ofertas"></nav>
+<p class="intro">Ofertas da semana em todas as lojas Big Box. Toque num produto para ver um exemplo de oferta relâmpago.</p>
+<main>
+  <img class="peixe-t" src="assets/peixe-laranja-lado.webp" alt="" style="top: 18%; --t: 26s; --atraso: -6s">
+  <img class="peixe-t volta" src="assets/peixe-vermelho-lado.webp" alt="" style="top: 62%; transform: scaleX(-1); --t: 32s; --atraso: -15s">
+  <section class="grade-t" aria-live="polite"></section>
+</main>
+<p class="tab-legal"></p>
+<script type="module">
+  import { tabloide } from './tabloide.js';
+  tabloide(document.body, { semana: +(new URLSearchParams(location.search).get('semana') ?? 1) });
+</script>
+</body>
+</html>
