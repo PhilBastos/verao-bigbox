@@ -603,7 +603,7 @@ function frameLens(a) {
   uwFog.density = underside.material.uniforms.density.value = floor.material.uniforms.density.value = uwBase;   // keep the fish readable
   split.u.lens.value = LENS * TAN_V0 / tanV;           // wider lens → smaller dome, so steep rays on tall screens don't reach the water
   skyGroup.scale.setScalar(Math.max(1, 800 * Math.tan(Math.atan(tanV) + 0.05) / (SKY_H - 25),   // sky's top edge never in frame…
-    (800 * tanV * a + 40) / (SKY_W / 2)));                                                       // …nor its sides on wide screens
+    800 * Math.tan(Math.atan(tanV * a) + 0.09) / (SKY_W / 2 - 10)));   // …nor its sides on wide screens (0.09 rad: the mouse sway turns the lens)
 }
 function fit() { frameLens(innerWidth / innerHeight); renderer.setSize(innerWidth, innerHeight); composer.setSize(innerWidth, innerHeight); }
 addEventListener('resize', fit); fit();
