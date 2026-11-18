@@ -2,7 +2,7 @@
    Cores e boia vêm de pecas.css. Assinatura: o profundímetro, que marca cada capítulo pela profundidade. */
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-html, body { margin: 0; background: #2a0f45; overscroll-behavior: none; }
+html, body { margin: 0; background: #0b4a5f; overscroll-behavior: none; }   /* tom da água, caso algo apareça atrás da cena */
 body { color: var(--espuma); font: 400 18px/1.6 'Poppins', sans-serif; -webkit-font-smoothing: antialiased; }
 canvas { display: block; position: fixed; inset: 0; z-index: 0; }
 main { position: relative; z-index: 1; overflow-x: clip; }   /* a pilha 3D e os rótulos não alargam a página (clip mantém o sticky) */

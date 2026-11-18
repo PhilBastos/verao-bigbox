@@ -605,7 +605,16 @@ function frameLens(a) {
   skyGroup.scale.setScalar(Math.max(1, 800 * Math.tan(Math.atan(tanV) + 0.05) / (SKY_H - 25),   // sky's top edge never in frame…
     800 * Math.tan(Math.atan(tanV * a) + 0.09) / (SKY_W / 2 - 10)));   // …nor its sides on wide screens (0.09 rad: the mouse sway turns the lens)
 }
-function fit() { frameLens(innerWidth / innerHeight); renderer.setSize(innerWidth, innerHeight); composer.setSize(innerWidth, innerHeight); }
+// phones: the scene is sized to the LARGE viewport (browser bar hidden). When the bar slides away on the first scroll
+// there is no gap under the canvas and nothing has to resize; while the bar is showing, the bottom just sits under it.
+const lvh = Object.assign(document.createElement('div'), { style: 'position:fixed;top:0;left:0;width:0;height:100lvh;visibility:hidden;pointer-events:none' });
+document.body.append(lvh);
+const alturaTela = () => Math.max(innerHeight, lvh.offsetHeight || 0);
+let fitW = 0, fitH = 0;
+function fit() {
+  const W = innerWidth, H = alturaTela(); if (W === fitW && H === fitH) return;   // the bar moving fires resize: same size, skip
+  fitW = W; fitH = H; frameLens(W / H); renderer.setSize(W, H); composer.setSize(W, H);
+}
 addEventListener('resize', fit); fit();
 const mouse = new THREE.Vector2();
 addEventListener('pointermove', e => mouse.set(e.clientX / innerWidth - 0.5, e.clientY / innerHeight - 0.5));
@@ -631,7 +640,7 @@ function camAt(p) {                          // piecewise-linear progress → cu
 const DIVE = 2.6;
 let pT = 0, pS = 0, deepT = 0, deep = 0;     // targets / smoothed
 const readScroll = () => {
-  const d = DIVE * innerHeight, end = Math.max(d + 1, document.documentElement.scrollHeight - innerHeight);
+  const d = DIVE * alturaTela(), end = Math.max(d + 1, document.documentElement.scrollHeight - innerHeight);
   pT = clamp01(scrollY / d); deepT = clamp01((scrollY - d) / (end - d));
 };
 addEventListener('scroll', readScroll, { passive: true }); addEventListener('resize', readScroll); readScroll();
